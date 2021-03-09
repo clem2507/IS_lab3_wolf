@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -13,7 +15,8 @@ public class WolvesApp extends JFrame {
 		
 	private Wolves game;
 	private JPanel control;
-	private boolean paused = true;
+	//private boolean paused = true;
+	private boolean paused = false;
 
 	public WolvesApp(String title, int numbrows, int numbcols, int squaresize) {
 		
@@ -28,7 +31,7 @@ public class WolvesApp extends JFrame {
 		int top  = (screenSize.height - numbrows*squaresize)/ 2;
 		setLocation(left, top);
 
-		//Wolves(numbrows, numbcols, numbWolves, numbPrey, visibilityRangePrey, minCapturedToEndGame(leave at 1), numberOfWolvesNeededToCaptureAPrey)
+		//main.Wolves(numbrows, numbcols, numbWolves, numbPrey, visibilityRangePrey, minCapturedToEndGame(leave at 1), numberOfWolvesNeededToCaptureAPrey)
 		game = new Wolves(numbrows, numbcols,3,10,5,1, 2);
 		
 		WolvesUI panel = new WolvesUI(game,squaresize);
@@ -54,7 +57,8 @@ public class WolvesApp extends JFrame {
 		add(control, BorderLayout.NORTH);
 		
 		pack();
-		this.setVisible(true);
+		//this.setVisible(true);
+		this.setVisible(false);
 	}
 
 	protected void togglePaused() {
@@ -101,7 +105,7 @@ public class WolvesApp extends JFrame {
 		catch(Exception e) {
 			//e.printStackTrace();
 			System.err.println("");
-			System.out.println("USAGE: java wolves.WolvesApp [-parameter value]");
+			System.out.println("USAGE: java wolves.main.WolvesApp [-parameter value]");
 			System.err.println("");
 			System.err.println("    Parameters");
 			System.err.println("   ------------");
@@ -113,7 +117,7 @@ public class WolvesApp extends JFrame {
 			System.exit(-1);
 		}
 		
-		WolvesApp wol = new WolvesApp("Hungry Hungry Wolves", height, width, squaresize);
+		WolvesApp wol = new WolvesApp("Hungry Hungry main.Wolves", height, width, squaresize);
 		wol.runGoL(delay);
 	}
 

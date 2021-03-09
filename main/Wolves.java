@@ -1,3 +1,7 @@
+package main;
+
+import output.Test;
+
 import javax.swing.*;
 import java.util.*;
 
@@ -68,11 +72,11 @@ public class Wolves {
     private void initWolves() {
         // You should put your own wolves in the array here!!
         Wolf[] wolvesPool = new Wolf[3];
-        wolvesPool[0] = new SmartWolf();
-        wolvesPool[1] = new WolfTrackPrey();
-        wolvesPool[2] = new WolfTrackPrey();
-        //wolvesPool[3] = new RandomWolf();
-        //wolvesPool[4] = new RandomWolf();
+        wolvesPool[0] = new WolfTrackPrey();
+        wolvesPool[1] = new WolfTrackWolf();
+        wolvesPool[2] = new WolfTrackWolf();
+        //wolvesPool[3] = new main.RandomWolf();
+        //wolvesPool[4] = new main.RandomWolf();
 
         // Below code will select three random wolves from the pool.
         // Make the pool as large as you want, but not < numWolves
@@ -109,7 +113,7 @@ public class Wolves {
 
         int[][] safetyGrid;
         if (!limitMovement) {
-            // Wolves can move diagonally
+            // main.Wolves can move diagonally
             for (int i = 0; i<numWolves; i++) {
                 safetyGrid = new int[grid.length][grid[0].length];
                 for (int r=0; r<grid.length; r++)
@@ -118,7 +122,7 @@ public class Wolves {
                 moves[i] = wolves[i].moveAll(getWolfViewW(i), getWolfViewP(i));
             }
         } else {
-            // Wolves can not move diagonally
+            // main.Wolves can not move diagonally
             for (int i = 0; i < numWolves; i++) {
                 safetyGrid = new int[grid.length][grid[0].length];
                 for (int r = 0; r < grid.length; r++)
@@ -180,9 +184,19 @@ public class Wolves {
 
         //check whether enough preys have been captured
         if (capturedList.size() >= minCaptured) {
-            JOptionPane.showMessageDialog(null, "Wolves won in " + tickcounter + " steps!!");
-            System.out.println("Winners");
-            System.exit(0);
+            //JOptionPane.showMessageDialog(null, "main.Wolves won in " + tickcounter + " steps!!");
+            //System.out.println("Winners");
+            //System.exit(0);
+            if (Test.counter < Test.numOfIterations) {
+                System.out.println("counter = " + Test.counter);
+                Test.data[Test.counter] = Long.toString(tickcounter);
+                Test.counter++;
+                Test.startGame();
+            }
+            else {
+                Test.output.writeResume(Test.data);
+                System.exit(0);
+            }
         }
     }
 

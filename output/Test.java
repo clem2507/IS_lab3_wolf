@@ -17,9 +17,9 @@ public class Test {
 
     public static void startGame() {
 
-        output = new OutputCSV("Smart_Smart_Smart_lim.csv", "#turns");
+        output = new OutputCSV("Smart_Smart_Smart_catch.csv", "#turns");
 
-        WolvesApp wol = new WolvesApp("Hungry Hungry main.Wolves", 50, 50, 15);
+        WolvesApp wol = new WolvesApp("Hungry Hungry main.Wolves", 50, 50, 15, true);
         wol.runGoL(1);
     }
 }

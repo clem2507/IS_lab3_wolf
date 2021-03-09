@@ -24,11 +24,12 @@ public class Wolves {
     private WolvesUI visuals;
     private long tickcounter = 0;
     // here we ask for the wolves moves; to change the movement style, change the limitMovement variable
-    private boolean limitMovement = true;
-    public static String[] previousStates = {"", "", ""};
+    private boolean limitMovement = false;
+    public static String[] previousStates;
     public static boolean flag = true;
+    private boolean isOutput;
 
-    public Wolves(int rows, int cols, int numWolves, int numPreys, int visibility, int minCaptured, int min_surround) {
+    public Wolves(int rows, int cols, int numWolves, int numPreys, int visibility, int minCaptured, int min_surround, boolean isOutput) {
         this.rows = rows;
         this.cols = cols;
         this.numWolves = numWolves;
@@ -36,6 +37,7 @@ public class Wolves {
         this.visibility = visibility;
         this.minCaptured = minCaptured;
         this.min_surround = min_surround;
+        this.isOutput = isOutput;
         grid = new int[rows][cols];
 
         wolfRow = new int[numWolves];
@@ -43,6 +45,11 @@ public class Wolves {
         preyRow = new int[numPreys];
         preyCol = new int[numPreys];
         wolves = new Wolf[numWolves];
+
+        previousStates = new String[numWolves];
+        for (int i = 0; i < previousStates.length; i++) {
+            previousStates[i] = "";
+        }
 
         for (int i = 0; i < numWolves; i++) {
             do {
@@ -73,12 +80,10 @@ public class Wolves {
 
     private void initWolves() {
         // You should put your own wolves in the array here!!
-        Wolf[] wolvesPool = new Wolf[3];
-        wolvesPool[0] = new SmartWolf();
-        wolvesPool[1] = new SmartWolf();
-        wolvesPool[2] = new SmartWolf();
-        //wolvesPool[3] = new main.RandomWolf();
-        //wolvesPool[4] = new main.RandomWolf();
+        Wolf[] wolvesPool = new Wolf[numWolves];
+        for (int i = 0; i < wolvesPool.length; i++) {
+            wolvesPool[i] = new SmartWolf();
+        }
 
         // Below code will select three random wolves from the pool.
         // Make the pool as large as you want, but not < numWolves
@@ -167,7 +172,10 @@ public class Wolves {
         else {
             flag = false;
         }
-        previousStates = new String[]{"", "", ""};
+        previousStates = new String[numWolves];
+        for (int i = 0; i < previousStates.length; i++) {
+            previousStates[i] = "";
+        }
 
         // and here we move everybody
         for (int i = 0; i < numWolves; i++) {
@@ -192,18 +200,21 @@ public class Wolves {
 
         //check whether enough preys have been captured
         if (capturedList.size() >= minCaptured) {
-            //JOptionPane.showMessageDialog(null, "main.Wolves won in " + tickcounter + " steps!!");
-            //System.out.println("Winners");
-            //System.exit(0);
-            if (Test.counter < Test.numOfIterations) {
-                System.out.println("counter = " + Test.counter);
-                Test.data[Test.counter] = Long.toString(tickcounter);
-                Test.counter++;
-                Test.startGame();
+            if (!isOutput) {
+                JOptionPane.showMessageDialog(null, "main.Wolves won in " + tickcounter + " steps!!");
+                System.out.println("Winners");
+                System.exit(0);
             }
             else {
-                Test.output.writeResume(Test.data);
-                System.exit(0);
+                if (Test.counter < Test.numOfIterations) {
+                    System.out.println("counter = " + Test.counter);
+                    Test.data[Test.counter] = Long.toString(tickcounter);
+                    Test.counter++;
+                    Test.startGame();
+                } else {
+                    Test.output.writeResume(Test.data);
+                    System.exit(0);
+                }
             }
         }
     }
@@ -297,7 +308,7 @@ public class Wolves {
                 count++;
             }
         }
-        if (count == numWolves) {
+        if (count == arr.length) {
             return false;
         }
         else {

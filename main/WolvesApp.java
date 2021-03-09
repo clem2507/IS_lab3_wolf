@@ -17,13 +17,17 @@ public class WolvesApp extends JFrame {
 	private JPanel control;
 	//private boolean paused = true;
 	private boolean paused = false;
+	private static boolean isOutput = false;
+	public static int numOfWolves = 3;
 
-	public WolvesApp(String title, int numbrows, int numbcols, int squaresize) {
-		
+	public WolvesApp(String title, int numbrows, int numbcols, int squaresize, boolean isOutput) {
+
 		// init window
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
+
+		WolvesApp.isOutput = isOutput;
 		
 		// set window location to center of screen
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,7 +36,7 @@ public class WolvesApp extends JFrame {
 		setLocation(left, top);
 
 		//main.Wolves(numbrows, numbcols, numbWolves, numbPrey, visibilityRangePrey, minCapturedToEndGame(leave at 1), numberOfWolvesNeededToCaptureAPrey)
-		game = new Wolves(numbrows, numbcols,3,10,5,1, 2);
+		game = new Wolves(numbrows, numbcols,numOfWolves,10,5,1, 2, isOutput);
 		
 		WolvesUI panel = new WolvesUI(game,squaresize);
 		add(panel, BorderLayout.CENTER);
@@ -57,8 +61,7 @@ public class WolvesApp extends JFrame {
 		add(control, BorderLayout.NORTH);
 		
 		pack();
-		//this.setVisible(true);
-		this.setVisible(false);
+		this.setVisible(!isOutput);
 	}
 
 	protected void togglePaused() {
@@ -117,7 +120,7 @@ public class WolvesApp extends JFrame {
 			System.exit(-1);
 		}
 		
-		WolvesApp wol = new WolvesApp("Hungry Hungry main.Wolves", height, width, squaresize);
+		WolvesApp wol = new WolvesApp("Hungry Hungry main.Wolves", height, width, squaresize, isOutput);
 		wol.runGoL(delay);
 	}
 

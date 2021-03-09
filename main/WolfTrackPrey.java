@@ -39,7 +39,7 @@ public class WolfTrackPrey implements Wolf {
         }
         else {
             mymove = new int[2];
-            mymove[0] = r.nextInt(2) + 1;
+            mymove[0] = r.nextInt(3) + 1;
         }
         return mymove;
     }

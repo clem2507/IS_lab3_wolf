@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -13,12 +14,22 @@ public class SmartWolf implements Wolf {
 	@Override
 	public int[] moveAll(List<int[]> wolvesSight, List<int[]> preysSight) {
 		this.actionRange = "all";
+		for (int i = 0; i < Wolves.previousStates.length; i++) {
+			if (wolvesSight.get(i)[0] == 0 && wolvesSight.get(i)[1] == 0) {
+				Wolves.previousStates[i] = state;
+			}
+		}
 		return actionChooser(wolvesSight, preysSight);
 	}
 
 	@Override
 	public int moveLim(List<int[]> wolvesSight, List<int[]> preysSight) {
 		this.actionRange = "lim";
+		for (int i = 0; i < Wolves.previousStates.length; i++) {
+			if (wolvesSight.get(i)[0] == 0 && wolvesSight.get(i)[1] == 0) {
+				Wolves.previousStates[i] = state;
+			}
+		}
 		return actionChooser(wolvesSight, preysSight)[0];
 	}
 
@@ -27,15 +38,21 @@ public class SmartWolf implements Wolf {
 		//System.out.println();
 		//System.out.println("New wolf "+state);
 		int[] tracking_wolf = wolfFollowing(wolvesSight);
-		if( state == "tracking_wolf"){
-			return track(wolvesSight.get(wolf2track));
-		} else if (state !="tracking_pray" && tracking_wolf!=null){
-			state = "tracking_wolf";
-			return tracking_wolf;
-		} else if (preysSight.size()>0){
-			state = "tracking_pray";
-			return followPrey(preysSight);
-		}else{
+		if (Wolves.flag) {
+			if (state.equals("tracking_wolf")) {
+				return track(wolvesSight.get(wolf2track));
+			} else if (!state.equals("tracking_pray") && tracking_wolf != null) {
+				state = "tracking_wolf";
+				return tracking_wolf;
+			} else if (preysSight.size() > 0) {
+				state = "tracking_pray";
+				return followPrey(preysSight);
+			} else {
+				state = "wander";
+				return randomMove();
+			}
+		}
+		else {
 			state = "wander";
 			return randomMove();
 		}

@@ -24,7 +24,9 @@ public class Wolves {
     private WolvesUI visuals;
     private long tickcounter = 0;
     // here we ask for the wolves moves; to change the movement style, change the limitMovement variable
-    private boolean limitMovement = false;
+    private boolean limitMovement = true;
+    public static String[] previousStates = {"", "", ""};
+    public static boolean flag = true;
 
     public Wolves(int rows, int cols, int numWolves, int numPreys, int visibility, int minCaptured, int min_surround) {
         this.rows = rows;
@@ -72,9 +74,9 @@ public class Wolves {
     private void initWolves() {
         // You should put your own wolves in the array here!!
         Wolf[] wolvesPool = new Wolf[3];
-        wolvesPool[0] = new WolfTrackPrey();
-        wolvesPool[1] = new WolfTrackWolf();
-        wolvesPool[2] = new WolfTrackWolf();
+        wolvesPool[0] = new SmartWolf();
+        wolvesPool[1] = new SmartWolf();
+        wolvesPool[2] = new SmartWolf();
         //wolvesPool[3] = new main.RandomWolf();
         //wolvesPool[4] = new main.RandomWolf();
 
@@ -158,8 +160,14 @@ public class Wolves {
                         break;
                 }
             }
-            System.out.println("-----");
         }
+        if (checkPreviousStates(previousStates)) {
+            flag = true;
+        }
+        else {
+            flag = false;
+        }
+        previousStates = new String[]{"", "", ""};
 
         // and here we move everybody
         for (int i = 0; i < numWolves; i++) {
@@ -281,4 +289,19 @@ public class Wolves {
         return preys;
     }
 
+    public boolean checkPreviousStates(String[] arr) {
+
+        int count = 0;
+        for (String str : arr) {
+            if (str.equals("tracking_wolf")) {
+                count++;
+            }
+        }
+        if (count == numWolves) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }

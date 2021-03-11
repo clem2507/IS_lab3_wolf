@@ -3,6 +3,9 @@ package main;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This class implements a strategy that can be used by an agent to only track other agents
+ */
 public class WolfTrackPrey implements Wolf {
 
     private String actionRange;
@@ -19,6 +22,7 @@ public class WolfTrackPrey implements Wolf {
         return actionChooser(wolvesSight, preysSight)[0];
     }
 
+    // Description of the method in the Wolf interface
     @Override
     public int[] actionChooser(List<int[]> wolvesSight, List<int[]> preysSight) {
         if (preysSight.size()>0){
@@ -28,6 +32,7 @@ public class WolfTrackPrey implements Wolf {
         }
     }
 
+    // Description of the method in the Wolf interface
     @Override
     public int[] randomMove(){
         int[] mymove;
@@ -44,8 +49,12 @@ public class WolfTrackPrey implements Wolf {
         return mymove;
     }
 
+    /**
+     * Method that given certain coordinates on the board, return the best move to track it
+     * @param coos 2D integer array that contains the coordinates to follow
+     * @return 2D integer array of the best action to track the coordinates
+     */
     public int[] track(int[] coos){
-        //System.out.println("Track "+coos[0]+","+coos[1]);
         if (actionRange.equals("all")) {
             int x_dir = 0;
             if (coos[0] != 0) {
@@ -80,6 +89,11 @@ public class WolfTrackPrey implements Wolf {
         }
     }
 
+    /**
+     * Method similar to the wolfFollowing() one, but for the preys
+     * @param preysSight list that contains possible coordinates of a prey if situated in the agent range of view
+     * @return 2D integer array of the prey coordinates to track
+     */
     public int[] followPrey(List<int[]>preysSight){
 
         int[] closest_pray = preysSight.get(0);
@@ -89,7 +103,6 @@ public class WolfTrackPrey implements Wolf {
             }
         }
         int[] move = track(closest_pray);
-        //System.out.println("move "+move[0]+","+move[1]);
         return move;
     }
 }

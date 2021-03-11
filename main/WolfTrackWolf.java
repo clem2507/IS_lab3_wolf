@@ -3,6 +3,9 @@ package main;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This class implements a strategy that can be used by an agent to only track possible preys
+ */
 public class WolfTrackWolf implements Wolf {
 
     private List<int[]> wolves;
@@ -21,6 +24,7 @@ public class WolfTrackWolf implements Wolf {
         return actionChooser(wolvesSight, preysSight)[0];
     }
 
+    // Description of the method in the Wolf interface
     @Override
     public int[] actionChooser(List<int[]> wolvesSight, List<int[]> preysSight){
         int[] tracking_wolf = wolfFollowing(wolvesSight);
@@ -32,6 +36,7 @@ public class WolfTrackWolf implements Wolf {
         }
     }
 
+    // Description of the method in the Wolf interface
     @Override
     public int[] randomMove(){
         int[] mymove;
@@ -48,8 +53,12 @@ public class WolfTrackWolf implements Wolf {
         return mymove;
     }
 
+    /**
+     * Method that given certain coordinates on the board, return the best move to track it
+     * @param coos 2D integer array that contains the coordinates to follow
+     * @return 2D integer array of the best action to track the coordinates
+     */
     public int[] track(int[] coos){
-        //System.out.println("Track "+coos[0]+","+coos[1]);
         if (actionRange.equals("all")) {
             int x_dir = 0;
             if (coos[0] != 0) {
@@ -84,6 +93,11 @@ public class WolfTrackWolf implements Wolf {
         }
     }
 
+    /**
+     * Method used to know the coordinates of the best wolf to follow
+     * @param wolvesSight list of coordinates that corresponds the the positions of other wolves
+     * @return 2D integer array of the wolf coordinates to track
+     */
     public int[] wolfFollowing(List<int[]> wolvesSight){
         if(wolves  == null){
             wolves = wolvesSight;
@@ -91,7 +105,7 @@ public class WolfTrackWolf implements Wolf {
         }else{
             for (int i = 0; i < wolvesSight.size(); i++) {
                 if(wolvesSight.get(i)[1]!=wolves.get(i)[1]){
-                    wolves =wolvesSight;
+                    wolves = wolvesSight;
                     wolf2track = i;
                     return track(wolvesSight.get(i));
                 }

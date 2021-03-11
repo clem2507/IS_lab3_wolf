@@ -38,7 +38,6 @@ public class OutputCSV {
 
         try {
             printWriter.println(stringHeaderResume);
-            //printWriter.println();
 
             for (int i = 0; i < data.length; i++) {
                 printWriter.println(data[i]);

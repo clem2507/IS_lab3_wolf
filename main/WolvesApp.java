@@ -15,8 +15,7 @@ public class WolvesApp extends JFrame {
 		
 	private Wolves game;
 	private JPanel control;
-	//private boolean paused = true;
-	private boolean paused = false;
+	private boolean paused = true;
 	private static boolean isOutput = false;
 	public static int numOfWolves = 3;
 

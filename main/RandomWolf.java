@@ -3,6 +3,9 @@ package main;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This class implements a totally random strategy that can be used by an agent
+ */
 public class RandomWolf implements Wolf {
 
     private String actionRange;
@@ -18,11 +21,13 @@ public class RandomWolf implements Wolf {
         return actionChooser(wolvesSight, preysSight)[0];
     }
 
+    // Description of the method in the Wolf interface
     @Override
     public int[] actionChooser(List<int[]> wolvesSight, List<int[]> preysSight) {
         return randomMove();
     }
 
+    // Description of the method in the Wolf interface
     @Override
     public int[] randomMove() {
         int[] mymove;
@@ -38,6 +43,4 @@ public class RandomWolf implements Wolf {
         }
         return mymove;
     }
-
-
 }
